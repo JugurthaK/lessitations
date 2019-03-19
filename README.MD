@@ -10,3 +10,5 @@ So, to make it funnier, i've created a Discord bot
  
  ### To get a randomized quote
  `!random`
+
+ To configure it, you need to create a config.js file,
