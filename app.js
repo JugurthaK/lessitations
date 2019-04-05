@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const auth = require('./config');
 const database = require('./database');
-
 let tabCitation = [];
 database.getCitations(res => {
     tabCitation = res;
@@ -26,7 +25,8 @@ client.on('message', msg => {
             database.addCitation(auteur, citation);
             database.getCitations(res => {
                 tabCitation = res;
-            })
+            });
+            msg.reply(" La citation a bien été ajoutée");
         }
     } else if (msg.content.startsWith('!random')){
         let random = tabCitation[Math.floor(Math.random() * tabCitation.length)];
@@ -35,3 +35,16 @@ client.on('message', msg => {
 })
 
 client.login(auth.key);
+
+// To monitor it
+const express = require ('express');
+let app = express();
+
+app.get('/alive', (req, res) => {
+    res.set('Content-Type', 'application/json');
+    res.send(JSON.stringify({
+        name:'lessitations',
+        alive:'yes'}));
+});
+
+app.listen(8080);
